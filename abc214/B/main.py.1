@@ -1,0 +1,11 @@
+from itertools import product
+
+if __name__ == "__main__":
+    pairs = product(range(101), range(101), range(101))
+    data = {
+        (a, b, c): (a+b+c, a*b*c)
+        for a, b, c in pairs
+        if a+b+c <= 100 and a*b*c <= 10000
+    }
+    S, T = map(int, input().strip().split(" "))
+    print(len(list(filter(lambda ST: ST[0] <= S and ST[1] <= T, data.values()))))
