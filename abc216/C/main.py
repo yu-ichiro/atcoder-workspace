@@ -18,6 +18,11 @@ def solve(N: int):
     return
 
 
+def solve_2(N: int):
+    print("B".join("A" if d == "1" else "" for d in bin(N)[2:]))
+    return
+
+
 def main():
     def iterate_tokens():
         for line in sys.stdin:
@@ -26,7 +31,7 @@ def main():
 
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
-    solve(N)
+    solve_2(N)
 
 
 if __name__ == '__main__':
