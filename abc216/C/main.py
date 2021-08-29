@@ -12,7 +12,7 @@ def solve(N: int):
             N -= 1
         else:
             result.append("B")
-            N /= 2
+            N //= 2
     print("".join(reversed(result)))
 
     return
