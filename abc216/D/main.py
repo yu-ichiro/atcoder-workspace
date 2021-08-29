@@ -7,19 +7,36 @@ NO = "No"  # type: str
 
 
 def solve(N, _M, _K, A):
-    graph = [0] * N
+    # 一番上にある玉を色（数字）ごとに分類した時の個数
+    top = [0] * (N+1)
+    # 一つ一つの玉の一つ下にある玉の色（数字）を記録するメモ
+    one_below = [[] for _ in range(N+1)]
     for a in A:
-        for j, x in enumerate(a[1:]):
-            j += 1
-            y = a[j-1]
-            x, y = x-1, y-1
+        top[a[0]] += 1
+        for above, below in zip(a[:-1], a[1:]):
+            one_below[above].append(below)
+    # 一番上でペアになっている玉一覧
+    pairs = [
+        i
+        for i, x in enumerate(top)
+        if x == 2
+    ]
 
-            self = 1 << x
-            depends = 1 << y
-            if self & graph[y]:
-                return print(NO)
-            graph[j] |= graph[j-1] | depends
-    print(YES)
+    # ペアが存在する限り
+    while pairs:
+        # ペアを一つ取り出す
+        x = pairs.pop()
+        top[x] = 0
+        # 取り出した玉の下にある玉を
+        for below in one_below[x]:
+            # 一番上にある色（数字）に加算し
+            top[below] += 1
+            # ペアになっていれば記録する
+            if top[below] == 2:
+                pairs.append(below)
+
+    # 一番上にどれか一つでも残っていればNO、そうでなければYES
+    print(NO if any(top) else YES)
 
 
 def main():
