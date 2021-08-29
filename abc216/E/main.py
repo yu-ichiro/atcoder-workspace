@@ -4,7 +4,31 @@
 import sys
 
 
-def solve(N: int, K: int, A: "List[int]"):
+def solve(_N: int, K: int, A: "List[int]"):
+    fun_dict = {}
+    for x in A:
+        fun_dict[x] = fun_dict.get(x, 0) + 1
+    A = sorted(set(A), reverse=True)
+    satisfaction = 0
+    for fun, next_fun in zip(A, A[1:] + [0]):
+        count = fun_dict.pop(fun)
+        quotient, mod = divmod(K, count)
+        if fun - quotient > next_fun:
+            if mod:
+                K -= mod
+                satisfaction += (fun - quotient) * mod
+            bottom = fun - quotient + 1
+            K -= count * quotient
+            satisfaction += (fun + bottom) * quotient * count // 2
+            break
+        n = fun - next_fun
+        K -= count * n
+        satisfaction += (fun + next_fun + 1) * n * count // 2
+        if next_fun == 0:
+            break
+        fun_dict[next_fun] += count
+
+    print(satisfaction)
     return
 
 
