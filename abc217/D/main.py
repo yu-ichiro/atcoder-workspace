@@ -3,8 +3,56 @@
 # Copyright 2021 Yuichiro Smith
 import sys
 
+sys.setrecursionlimit(10**9)
 
-def solve(L: int, Q: int, c: "List[int]", x: "List[int]"):
+
+def solve(L: int, _Q: int, C: "List[int]", X: "List[int]"):
+    queries = list(zip(C, X))
+    splits = [
+        x
+        for c, x in queries
+        if c == 1
+    ]
+    splits.sort()
+    splits.append(L)
+    start = 0
+    uf = [-1] * L
+    for split in splits:
+        uf[start] = start - split
+        for i in range(start+1, split):
+            uf[i] = start
+        start = split
+
+    def root(x):
+        if uf[x] < 0:
+            return x
+        r = root(uf[x])
+        uf[x] = r
+        return r
+
+    def size(x):
+        return -uf[root(x)]
+
+    def union(x, y):
+        if x == y:
+            return
+        x, y = map(root, (x, y))
+        size_x, size_y = map(size, (x, y))
+        if size_x < size_y:
+            x, y = y, x
+        uf[x] += uf[y]
+        uf[y] = x
+
+    result = []
+    for c, x in reversed(queries):
+        if c == 1:
+            union(x-1, x)
+        if c == 2:
+            result.append(size(x-1))
+        # print(uf)
+
+    for res in reversed(result):
+        print(res)
     return
 
 
