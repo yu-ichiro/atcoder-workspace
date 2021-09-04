@@ -8,7 +8,7 @@ NO = "No"  # type: str
 
 
 def solve(S: str, T: str):
-    return
+    print(YES if S < T else NO)
 
 
 def main():
