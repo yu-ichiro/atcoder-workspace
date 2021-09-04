@@ -3,9 +3,12 @@
 # Copyright 2021 Yuichiro Smith
 import sys
 
+contests = {"ABC", "ARC", "AGC", "AHC"}
+
 
 def solve(S: "List[str]"):
-    return
+    other = next(iter(contests - set(S)))
+    print(other)
 
 
 def main():
