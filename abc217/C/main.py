@@ -4,8 +4,12 @@
 import sys
 
 
-def solve(N: int, p: "List[int]"):
-    return
+def solve(N: int, P: "List[int]"):
+    pq_map = {
+        p-1: i+1
+        for i, p in enumerate(P)
+    }
+    print(" ".join(map(str, [pq_map[i] for i in range(N)])))
 
 
 def main():
