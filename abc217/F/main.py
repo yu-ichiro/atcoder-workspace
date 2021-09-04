@@ -7,6 +7,16 @@ MOD = 998244353  # type: int
 
 
 def solve(N: int, M: int, A: "List[int]", B: "List[int]"):
+    length = 2 * N
+    student_set = set(range(1, length+1))
+    if student_set - set(A) - set(B):
+        return 0
+    for a, b in zip(A, B):
+        if b - a == 1:
+            break
+    else:
+        return 0
+
     return
 
 
@@ -23,7 +33,7 @@ def main():
     for i in range(M):
         A[i] = int(next(tokens))
         B[i] = int(next(tokens))
-    solve(N, M, A, B)
+    print(solve(N, M, A, B))
 
 
 if __name__ == '__main__':
