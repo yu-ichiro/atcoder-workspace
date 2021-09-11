@@ -8,6 +8,7 @@ NO = "No"  # type: str
 
 
 def solve(N: int, S: str):
+    print(YES if S[N-1] == "o" else NO)
     return
 
 
