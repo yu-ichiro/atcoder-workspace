@@ -5,6 +5,7 @@ import sys
 
 
 def solve(P: "List[int]"):
+    print("".join(map(lambda n: chr(ord("a") + n-1), P)))
     return
 
 
