@@ -5,29 +5,35 @@ import sys
 
 
 def solve(N: int, X: int, Y: int, A: "List[int]", B: "List[int]"):
-    x_eaten = 0
-    y_eaten = 0
-    lunches = []
-    for x, y in zip(A, B):
-        x_eaten += x
-        y_eaten += y
-        lunches.append((x, y))
-    if x_eaten < X or y_eaten < Y:
-        print(-1)
-        return
-    lunches.sort()
-    min_lunches = len(lunches)
-    for x, y in lunches:
-        if x_eaten - x < X and y_eaten - y < Y:
-            break
-        if x_eaten - x < X:
-            continue
-        if y_eaten - y < Y:
-            continue
-        x_eaten -= x
-        y_eaten -= y
-        min_lunches -= 1
-    print(min_lunches)
+    INF = N+1
+    dp = [
+        [
+            [
+                INF
+                for _ in range(X + 1)
+            ]
+            for _ in range(Y + 1)
+        ]
+        for _ in range(N + 1)
+    ]
+
+    dp[0][0][0] = 0
+    for i, (x, y) in enumerate(zip(A, B)):
+        i += 1
+        for j in range(Y+1):
+            for k in range(X+1):
+                if dp[i-1][j][k] == INF:
+                    continue
+                jy = min(Y, j + y)
+                kx = min(X, k + x)
+                dp[i][jy][kx] = min(dp[i][jy][kx], dp[i-1][j][k] + 1)
+                dp[i][j][k] = min(dp[i][j][k], dp[i-1][j][k])
+        # print((x, y))
+        # print("\n".join([
+        #     ", ".join(map(str, row))
+        #     for row in dp[i]
+        # ]))
+    print(dp[N][Y][X] if dp[N][Y][X] != INF else -1)
     return
 
 
@@ -36,6 +42,7 @@ def main():
         for line in sys.stdin:
             for word in line.split():
                 yield word
+
     tokens = iterate_tokens()
     N = int(next(tokens))  # type: int
     X = int(next(tokens))  # type: int
