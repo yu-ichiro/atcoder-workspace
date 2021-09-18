@@ -5,6 +5,29 @@ import sys
 
 
 def solve(N: int, X: int, Y: int, A: "List[int]", B: "List[int]"):
+    x_eaten = 0
+    y_eaten = 0
+    lunches = []
+    for x, y in zip(A, B):
+        x_eaten += x
+        y_eaten += y
+        lunches.append((x, y))
+    if x_eaten < X or y_eaten < Y:
+        print(-1)
+        return
+    lunches.sort()
+    min_lunches = len(lunches)
+    for x, y in lunches:
+        if x_eaten - x < X and y_eaten - y < Y:
+            break
+        if x_eaten - x < X:
+            continue
+        if y_eaten - y < Y:
+            continue
+        x_eaten -= x
+        y_eaten -= y
+        min_lunches -= 1
+    print(min_lunches)
     return
 
 
