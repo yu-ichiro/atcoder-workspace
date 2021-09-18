@@ -4,8 +4,61 @@
 import sys
 
 
+class UnionFind:
+    def __init__(self, N: int):
+        self.n = N
+        self.roots = set(range(N))
+        self._uf = [-1 for _ in range(N)]
+        self._rank = [1 for _ in range(N)]
+
+    def root(self, idx):
+        if self._uf[idx] < 0:
+            return idx
+        root = self.root(self._uf[idx])
+        self._uf[idx] = root
+        return root
+
+    def same(self, x, y):
+        return self.root(x) == self.root(y)
+
+    def rank(self, idx):
+        return self._rank[self.root(idx)]
+
+    def size(self, idx):
+        return -self._uf[self.root(idx)]
+
+    def unite(self, x, y):
+        x, y = map(self.root, (x, y))
+        if x == y:
+            return
+        rank_x, rank_y = map(self.rank, (x, y))
+        if rank_x < rank_y:
+            x, y = y, x
+        self.roots.remove(y)
+        self._uf[x] += self._uf[y]
+        self._uf[y] = x
+        if rank_x == rank_y:
+            self._rank[x] += 1
+
+
 def solve(N: int, M: int, A: "List[int]", B: "List[int]", C: "List[int]"):
-    return
+    uf = UnionFind(N)
+    score = 0
+    edges = []
+    for a, b, c in zip(A, B, C):
+        a, b = a-1, b-1
+        if c <= 0:
+            uf.unite(a, b)
+        else:
+            score += c
+            edges.append((c, a, b))
+    for c, a, b in sorted(edges):
+        if not uf.same(a, b):
+            uf.unite(a, b)
+            score -= c
+        if len(uf.roots) == 1:
+            break
+    print(score)
 
 
 def main():
