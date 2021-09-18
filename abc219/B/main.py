@@ -5,7 +5,12 @@ import sys
 
 
 def solve(S: "List[str]", T: int):
-    return
+    word_map = {
+        str(i+1): word
+        for i, word in enumerate(S)
+    }
+    result = "".join(word_map[i] for i in str(T))
+    print(result)
 
 
 def main():
