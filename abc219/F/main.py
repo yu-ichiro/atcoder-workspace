@@ -5,7 +5,33 @@ import sys
 
 
 def solve(S: str, K: int):
-    return
+    x, y = 0, 0
+    cleansed_grid = {(0, 0)}
+    k = K
+    cleansed = 0
+    previous_delta = 0
+    while k > 0:
+        k -= 1
+        for s in S:
+            if s == "R":
+                x += 1
+            if s == "L":
+                x -= 1
+            if s == "D":
+                y += 1
+            if s == "U":
+                y -= 1
+            grid = x, y
+            if grid not in cleansed_grid:
+                cleansed_grid.add(grid)
+        delta = len(cleansed_grid) - cleansed
+        cleansed += delta
+        if delta == previous_delta:
+            cleansed += delta * k
+            break
+        else:
+            previous_delta = delta
+    print(cleansed)
 
 
 def main():
