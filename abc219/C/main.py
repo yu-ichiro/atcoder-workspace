@@ -3,9 +3,21 @@
 # Copyright 2021 Yuichiro Smith
 import sys
 
+original = "abcdefghijklmnopqrstuvwxyz"
+
 
 def solve(X: str, N: int, S: "List[str]"):
-    return
+    order = {
+        c: o
+        for o, c in zip(original, X)
+    }
+    mapped_names = {
+        name: "".join(map(lambda c: order[c], name))
+        for name in S
+    }
+    sorted_names, _ = zip(*sorted(mapped_names.items(), key=lambda item: item[1]))
+    for name in sorted_names:
+        print(name)
 
 
 def main():
