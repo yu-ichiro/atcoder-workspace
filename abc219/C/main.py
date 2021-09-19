@@ -11,12 +11,11 @@ def solve(X: str, N: int, S: "List[str]"):
         c: o
         for o, c in zip(original, X)
     }
-    mapped_names = {
-        name: "".join(map(lambda c: order[c], name))
+    mapped_names = [
+        ("".join(map(lambda c: order[c], name)), name)
         for name in S
-    }
-    sorted_names, _ = zip(*sorted(mapped_names.items(), key=lambda item: item[1]))
-    for name in sorted_names:
+    ]
+    for _, name in sorted(mapped_names):
         print(name)
 
 
