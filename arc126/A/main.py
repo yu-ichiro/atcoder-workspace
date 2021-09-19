@@ -3,9 +3,37 @@
 # Copyright 2021 Yuichiro Smith
 
 
+def solve(N2: int, N3: int, N4: int):
+    p2223333444 = N2 // 3
+    p2223333444 = min(N3 // 4, N4 // 3, p2223333444)
+    N2 -= p2223333444*3
+    N3 -= p2223333444*4
+    N4 -= p2223333444*3
+
+    p334 = N3 // 2
+    p334 = min(N4, p334)
+    N3 -= p334*2
+    N4 -= p334
+
+    p244 = N4 // 2
+    p244 = min(N2, p244)
+    N2 -= p244
+    N4 -= p244*2
+
+    p2233 = N3 // 2
+    p2233 = min(N2 // 2, p2233)
+    N2 -= p2233*2
+    N3 -= p2233*2
+
+    p22222 = N2 // 5
+    N2 -= p22222
+    print(p2223333444*3 + p334 + p244 + p2233 + p22222)
+
+
 def main():
-    # Failed to predict input format
-    pass
+    T = int(input())
+    for _ in range(T):
+        solve(*map(int, input().split()))
 
 
 if __name__ == '__main__':

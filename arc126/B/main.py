@@ -5,7 +5,13 @@ import sys
 
 
 def solve(N: int, M: int, a: "List[int]", b: "List[int]"):
-    return
+    dp_select = (0, 0, 0)
+    dp_no_select = (0, 0, 0)
+    for a, b in sorted(zip(a, b), key=lambda pair: (min(pair), max(pair))):
+        select_count, select_a, select_b = dp_select
+        no_select_count, no_select_a, no_select_b = dp_no_select
+
+    print(dp[N][N][0])
 
 
 def main():
