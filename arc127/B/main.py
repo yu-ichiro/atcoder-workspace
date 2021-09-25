@@ -4,8 +4,19 @@
 import sys
 
 
+def base_n(n: int, k: int, chars="0123456789abcdefghijklmnopqrstuvwxyz") -> str:
+    q, r = divmod(k, n)
+    return (base_n(n, q, chars) if q > 0 else "") + chars[r]
+
+
 def solve(N: int, L: int):
-    return
+    base = 2 * 3**(L-1)
+    for k in range(base, base+N):
+        print(base_n(3, k, chars="120"))
+    for k in range(base, base+N):
+        print(base_n(3, k, chars="201"))
+    for k in range(base, base+N):
+        print(base_n(3, k, chars="012"))
 
 
 def main():
