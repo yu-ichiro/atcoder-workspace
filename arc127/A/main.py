@@ -4,8 +4,43 @@
 import sys
 
 
+def S(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return 2*S(n-1)+10**(n-1)
+
+
+def F(n):
+    if n == 0:
+        return 0
+    digits = str(n)
+    d_len = len(digits)
+    if d_len < 2:
+        return 1
+    first_two = int(digits[:2])
+    a = 10**(d_len-1) - 1
+    b = a + 10**(d_len-2) - 1
+    if first_two == 10:
+        return S(d_len-1) + n - a
+    elif first_two >= 20:
+        return S(d_len)
+    elif first_two == 11:
+        return S(d_len-1) \
+               + 10**(d_len-2) \
+               + 2*(n - b) + F(int("0"+digits[2:]))
+    else:
+        return S(d_len-1) \
+               + 10**(d_len-2) \
+               + 2*(n - b) + F(int("0"+digits[2:]))
+
+
+
 def solve(N: int):
-    return
+    digits = str(N)
+    if digits[0] != 1:
+        print(S(N))
 
 
 def main():
